@@ -7,6 +7,12 @@ Te device which is capable to receive Google calendar events and perform an acti
 
 [Second importance](https://forum.micropython.org/viewtopic.php?t=5295)
 
+
+```python
+import urequests
+r = urequests.get('https://script.google.com/macros/s/(token)/exec')
+```
+
 ```sh
 >>> import upip
 >>> upip.install('micropython-urequests')
