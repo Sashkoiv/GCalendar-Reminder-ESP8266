@@ -1,6 +1,6 @@
 import urllib.request
 
-GOOGLE_TOCKEN = ''
+GOOGLE_TOCKEN = '<tocken>'
 raw = urllib.request.urlopen("https://script.google.com/macros/s/{}/exec".format(GOOGLE_TOCKEN))
 contents = raw.read()
 end = contents.decode().split('\n')
