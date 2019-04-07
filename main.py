@@ -2,8 +2,10 @@ import urequests
 import ntptime
 import utime
 from gcalendar import Gcalendar
+import machine, neopixel
 
 GOOGLE_TOCKEN = '<tocken>'
+NP = neopixel.NeoPixel(machine.Pin(13), 8)
 
 
 def datetime_formatted():
@@ -43,9 +45,29 @@ def check_events():
 
     dt = datetime_formatted()
 
-    for event in events:
-        if event[:5] == dt:
-            print('{}\t\tequal to {}'.format(event[:5], dt))
-            print("An event is comming!")
-        else:
-            print('{}\t\tNOT equal to {}'.format(event[:5], dt))
+    for i, event in enumerate(events):
+        if i < 8:
+            if event[:5] == dt:
+                print('{}\t\tequal to {}'.format(event[:5], dt))
+                print("An event is comming!")
+                NP[i] = (0,255,0)
+            else:
+                print('{}\t\tNOT equal to {}'.format(event[:5], dt))
+                NP[i] = (255,0,0)
+            NP.write()
+
+    gotosleep(1)
+
+def gotosleep(time = 1):
+    # for i in range(7):
+    #     NP[i] = (0, 0, 0)
+    # NP.write()
+
+    rtc = machine.RTC()
+    rtc.irq(trigger=rtc.ALARM0, wake=machine.DEEPSLEEP)
+
+    # set RTC.ALARM0 to fire after 'time' seconds (waking the device)
+    rtc.alarm(rtc.ALARM0, time*60000)
+
+    # put the device to sleep
+    machine.deepsleep()
