@@ -50,19 +50,15 @@ def check_events():
             if event[:5] == dt:
                 print('{}\t\tequal to {}'.format(event[:5], dt))
                 print("An event is comming!")
-                NP[i] = (0,255,0)
+                NP[i] = (0,255,0, 128)
             else:
                 print('{}\t\tNOT equal to {}'.format(event[:5], dt))
-                NP[i] = (255,0,0)
+                NP[i] = (255,0,0, 128)
             NP.write()
 
     gotosleep(1)
 
 def gotosleep(time = 1):
-    # for i in range(7):
-    #     NP[i] = (0, 0, 0)
-    # NP.write()
-
     rtc = machine.RTC()
     rtc.irq(trigger=rtc.ALARM0, wake=machine.DEEPSLEEP)
 
